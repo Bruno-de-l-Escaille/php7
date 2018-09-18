@@ -1,1 +1,1 @@
-./start $1 $2
+/bin/start $1 $2
