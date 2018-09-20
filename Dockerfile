@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     libzzip-dev \
     libbz2-dev \
-    locales \
+    locales \ 
 	libmagickwand-dev --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && pecl install imagick \
