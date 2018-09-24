@@ -1,6 +1,7 @@
 FROM php:7.1-fpm
 
-RUN apt-get update && apt-get install -y \
+RUN export CFLAGS="$PHP_CFLAGS" CPPFLAGS="$PHP_CPPFLAGS" LDFLAGS="$PHP_LDFLAGS" \
+    && apt-get update && apt-get install -y \
     cron \
     apt-utils \
     libfreetype6-dev \
@@ -40,12 +41,16 @@ RUN     echo nl_BE.UTF-8 UTF-8 > /etc/locale.gen && \
         echo en_US UTF-8  >> /etc/locale.gen && \
         locale-gen
 
+ADD ../install-composer.sh /bin/install-composer.sh 
+RUN apt-get install -y git && chmod +x /bin/install-composer.sh && \
+    install-composer.sh && \
+mv composer.phar /usr/bin/composer
 
 RUN sed -i '/session.*required.*pam_loginuid.so/s/session/#session/g' /etc/pam.d/cron
 
-WORKDIR /pipeline/source
+WORKDIR /var/www
 
 
 ADD ./entrypoint.sh /bin/entrypoint.sh
 
-ENTRYPOINT ["/bin/entrypoint.sh"]
+CMD ['php-fpm']
