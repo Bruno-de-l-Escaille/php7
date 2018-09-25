@@ -26,7 +26,7 @@ then
     (crontab -l 2>/dev/null; echo "0 23 * * * /pipeline/source/ecs/validate_channel_configs.sh $env") | crontab -
     (crontab -l 2>/dev/null; echo "* * * * * su -s /bin/sh -c '/usr/local/bin/php /pipeline/source/bin/console ttp:blog:publish-scheduled-articles --env=$env > /tmp/schedule-article.log' www-data") | crontab -
     service cron start
-    tail -f /dev/null
+    unoconv --listener
 else
    php-fpm
 fi
