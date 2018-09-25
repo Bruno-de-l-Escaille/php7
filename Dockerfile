@@ -1,6 +1,7 @@
 FROM php:7.1-fpm
  
-RUN apt-get update && apt-get install -y \
+RUN export CFLAGS="$PHP_CFLAGS" CPPFLAGS="$PHP_CPPFLAGS" LDFLAGS="$PHP_LDFLAGS" \ 
+    && apt-get update && apt-get install -y \
     cron \
     apt-utils \
     libfreetype6-dev \
@@ -14,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     libzzip-dev \
     libbz2-dev \
     locales \
+    imagemagick \
     libmagickwand-dev --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && pecl install imagick \
@@ -24,9 +26,10 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install gettext \
     && docker-php-ext-install bz2
 
+
 RUN echo "deb http://httpredir.debian.org/debian/ jessie-backports main" >> /etc/apt/sources.list && \
 	apt-get update && \
-    apt-get install -y ffmpeg unoconv ghostscript
+        apt-get install -y ffmpeg unoconv ghostscript
 
 
 RUN     echo nl_BE.UTF-8 UTF-8 > /etc/locale.gen && \
