@@ -57,11 +57,10 @@ RUN set -ex \
   fi \
   && php composer-setup.php --quiet \
   && RESULT=$?\
-  && rm composer-setup.php
+  && rm composer-setup.php \
+  && chmod +x composer.phar && mv composer.phar /usr/bin/composer
 
 
 RUN sed -i '/session.*required.*pam_loginuid.so/s/session/#session/g' /etc/pam.d/cron
 
 WORKDIR /var/www
-
-ENTRYPOINT ["tail -f /dev/null"]

@@ -44,9 +44,10 @@ RUN echo nl_BE.UTF-8 UTF-8 > /etc/locale.gen && \
     locale-gen
 
 RUN sed -i '/session.*required.*pam_loginuid.so/s/session/#session/g' /etc/pam.d/cron
+RUN (crontab -l 2>/dev/null; echo "5 * * * * /usr/bin/unoconv --listener") | crontab -
 
 WORKDIR /pipeline/source
 
-ADD ./entrypoint.sh /bin/entrypoint.sh
+ENTRYPOINT []
 
-ENTRYPOINT ["/bin/entrypoint.sh"]
+CMD ["sh","-c", "service cron start &  /usr/bin/unoconv --listener & /usr/bin/unoconv --listener & php-fpm"]
