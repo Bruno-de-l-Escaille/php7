@@ -23,7 +23,8 @@ RUN export CFLAGS="$PHP_CFLAGS" CPPFLAGS="$PHP_CPPFLAGS" LDFLAGS="$PHP_LDFLAGS" 
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install gd \
     && docker-php-ext-install gettext \
-    && docker-php-ext-install bz2
+    && docker-php-ext-install bz2 \
+    && docker-php-ext-install bcmath
 
 RUN echo nl_BE.UTF-8 UTF-8 > /etc/locale.gen && \
     echo de_BE.UTF-8 UTF-8 >> /etc/locale.gen && \
