@@ -23,15 +23,18 @@ RUN export CFLAGS="$PHP_CFLAGS" CPPFLAGS="$PHP_CPPFLAGS" LDFLAGS="$PHP_LDFLAGS" 
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install gd \
     && docker-php-ext-install gettext \
-    && docker-php-ext-install bz2
+    && docker-php-ext-install bz2 \
+    && docker-php-ext-install bcmath
 
 RUN echo "deb http://httpredir.debian.org/debian/ jessie-backports main" >> /etc/apt/sources.list && \
     apt-get update && apt-get install -y \
     libmagickwand-dev --no-install-recommends \
     imagemagick ffmpeg unoconv ghostscript \
     && pecl install imagick \
-    && docker-php-ext-enable imagick
-
+    && pecl install apcu \
+    && docker-php-ext-enable imagick \
+    && docker-php-ext-enable apcu
+ 
 RUN echo nl_BE.UTF-8 UTF-8 > /etc/locale.gen && \
     echo de_BE.UTF-8 UTF-8 >> /etc/locale.gen && \
     echo de_BE UTF-8 >> /etc/locale.gen && \
@@ -43,11 +46,11 @@ RUN echo nl_BE.UTF-8 UTF-8 > /etc/locale.gen && \
     echo en_US UTF-8  >> /etc/locale.gen && \
     locale-gen
 
-RUN sed -i '/session.*required.*pam_loginuid.so/s/session/#session/g' /etc/pam.d/cron
-RUN (crontab -l 2>/dev/null; echo "5 * * * * /usr/bin/unoconv --listener") | crontab -
+#RUN sed -i '/session.*required.*pam_loginuid.so/s/session/#session/g' /etc/pam.d/cron
+#RUN (crontab -l 2>/dev/null; echo "5 * * * * /usr/bin/unoconv --listener") | crontab -
 
 WORKDIR /pipeline/source
 
-ENTRYPOINT []
+#ENTRYPOINT []
 
-CMD ["sh","-c", "service cron start &  /usr/bin/unoconv --listener & /usr/bin/unoconv --listener & php-fpm"]
+#CMD ["sh","-c", "service cron start &  /usr/bin/unoconv --listener & /usr/bin/unoconv --listener & php-fpm"]
