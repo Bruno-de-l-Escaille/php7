@@ -26,6 +26,15 @@ RUN export CFLAGS="$PHP_CFLAGS" CPPFLAGS="$PHP_CPPFLAGS" LDFLAGS="$PHP_LDFLAGS" 
     && docker-php-ext-install bz2 \
     && docker-php-ext-install bcmath
 
+RUN echo "deb http://httpredir.debian.org/debian/ jessie-backports main" >> /etc/apt/sources.list && \
+    apt-get update && apt-get install -y \
+    libmagickwand-dev --no-install-recommends \
+    imagemagick ffmpeg libreoffice ghostscript \
+    && pecl install imagick \
+    && pecl install apcu \
+    && docker-php-ext-enable imagick \
+    && docker-php-ext-enable apcu
+ 
 RUN echo nl_BE.UTF-8 UTF-8 > /etc/locale.gen && \
     echo de_BE.UTF-8 UTF-8 >> /etc/locale.gen && \
     echo de_BE UTF-8 >> /etc/locale.gen && \
@@ -36,11 +45,11 @@ RUN echo nl_BE.UTF-8 UTF-8 > /etc/locale.gen && \
     echo en_US.UTF-8 UTF-8  >> /etc/locale.gen && \
     echo en_US UTF-8  >> /etc/locale.gen && \
     locale-gen
+     
+RUN echo -e "apc.enabled=1\napc.enable_cli=1" >>  /usr/local/etc/php/conf.d/apcu.ini
+    
+RUN chown -R www-data:www-data /var/www
 
-RUN sed -i '/session.*required.*pam_loginuid.so/s/session/#session/g' /etc/pam.d/cron
 
 WORKDIR /pipeline/source
 
-ADD ./entrypoint.sh /bin/entrypoint.sh
-
-ENTRYPOINT ["/bin/entrypoint.sh"]

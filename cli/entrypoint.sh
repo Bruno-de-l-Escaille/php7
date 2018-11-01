@@ -1,5 +1,5 @@
 #!/bin/sh
-
+sed -i '/session.*required.*pam_loginuid.so/s/session/#session/g' /etc/pam.d/cron
 if [ $1 = "api" ]
 then
     if [ -z $2 ]
