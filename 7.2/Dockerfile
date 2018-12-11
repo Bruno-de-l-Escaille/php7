@@ -1,4 +1,4 @@
-FROM php:7.2-fpm
+FROM php:7.2-zts-stretch
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -29,5 +29,10 @@ RUN echo "apc.enabled=1" >  /usr/local/etc/php/conf.d/apcu.ini \
     && echo "apc.enable_cli=1" >>  /usr/local/etc/php/conf.d/apcu.ini \
     && echo "post_max_size=64M" >  /usr/local/etc/php/conf.d/upload.ini \
     && echo "upload_max_filesize=64M" >>  /usr/local/etc/php/conf.d/upload.ini
+RUN wget https://codeload.github.com/krakjoe/pthreads/zip/master \
+    && mv master master.zip && unzip master.zip \
+    && cd  pthreads-master \
+    && phpize && ./configure && make && make install \
+    && docker-php-ext-enable
 
 WORKDIR /var/
