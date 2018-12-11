@@ -46,7 +46,10 @@ RUN echo nl_BE.UTF-8 UTF-8 > /etc/locale.gen && \
     echo en_US UTF-8  >> /etc/locale.gen && \
     locale-gen
      
-RUN echo -e "apc.enabled=1\napc.enable_cli=1" >>  /usr/local/etc/php/conf.d/apcu.ini
+RUN echo "apc.enabled=1" >  /usr/local/etc/php/conf.d/apcu.ini && \
+    echo "apc.enable_cli=1" >>  /usr/local/etc/php/conf.d/apcu.ini && \
+    echo "post_max_size=64M" >  /usr/local/etc/php/conf.d/upload.ini && \
+    echo "upload_max_filesize=64M" >>  /usr/local/etc/php/conf.d/upload.ini
     
 RUN chown -R www-data:www-data /var/www
 
