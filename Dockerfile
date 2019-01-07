@@ -24,7 +24,8 @@ RUN export CFLAGS="$PHP_CFLAGS" CPPFLAGS="$PHP_CPPFLAGS" LDFLAGS="$PHP_LDFLAGS" 
     && docker-php-ext-install gd \
     && docker-php-ext-install gettext \
     && docker-php-ext-install bz2 \
-    && docker-php-ext-install bcmath
+    && docker-php-ext-install bcmath \
+    && docker-php-ext-install soap
 
 RUN echo "deb http://httpredir.debian.org/debian/ jessie-backports main" >> /etc/apt/sources.list && \
     apt-get update && apt-get install -y \
