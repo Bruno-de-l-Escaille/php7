@@ -4,15 +4,14 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN export CFLAGS="$PHP_CFLAGS" CPPFLAGS="$PHP_CPPFLAGS" LDFLAGS="$PHP_LDFLAGS" \
     && apt-get update && apt-get install -y \
-    cron wget zip apt-utils \
+    cron wget zip procps apt-utils \
     libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
     libmcrypt-dev libsqlite3-dev libssl-dev libcurl3-dev \
     libxml2-dev libzip-dev libbz2-dev locales \
     && docker-php-ext-configure zip --with-libzip \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install mysqli pdo_mysql bz2 zip bcmath gettext gd \
-    && pecl install mcrypt-1.0.1 \
-    && pecl install apcu \
+    && docker-php-ext-install mysqli pdo_mysql bz2 zip bcmath gettext gd soap\
+    && pecl install mcrypt-1.0.1 apcu \
     && docker-php-ext-enable apcu mcrypt \
     && echo nl_BE.UTF-8 UTF-8 > /etc/locale.gen \
     && echo de_BE.UTF-8 UTF-8 >> /etc/locale.gen \

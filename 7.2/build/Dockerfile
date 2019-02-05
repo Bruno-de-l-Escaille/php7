@@ -1,4 +1,4 @@
-FROM tamtampro/php:7.2-api
+FROM tamtampro/php:7.2
 
 RUN apt-get install -y git openssh-client \
   && set -ex \
