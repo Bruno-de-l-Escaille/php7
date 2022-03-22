@@ -14,7 +14,7 @@ ENV DEBIAN_FRONTEND noninteractive
     && docker-php-ext-configure zip --with-libzip \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
-    && docker-php-ext-install opcache mysqli pdo_mysql bz2 zip bcmath gettext gd soap imap \
+    && docker-php-ext-install opcache mysqli pdo_mysql bz2 zip bcmath gettext gd soap imap pcntl\
     && pecl install mcrypt-1.0.1 apcu redis \
     && docker-php-ext-enable apcu mcrypt redis \
     && echo nl_BE.UTF-8 UTF-8 > /etc/locale.gen \
