@@ -1,6 +1,5 @@
 FROM php:7.1-fpm
 
-<<<<<<< HEAD
 RUN apt-get update && apt-get install -y \
         cron \
         apt-utils \
@@ -103,4 +102,3 @@ RUN chown -R www-data:www-data /var/www
 
 
 WORKDIR /pipeline/source
->>>>>>> dev
