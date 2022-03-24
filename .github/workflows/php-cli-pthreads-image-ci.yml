@@ -1,9 +1,9 @@
-name: PHP CLI Docker Image CI
+name: PHP CLI PTHREADS Docker Image CI
 
 on:
   push:
     tags:
-      - "PHP-CLI"
+      - "PHP-CLI-PTHREADS"
       
 jobs:
 
@@ -38,10 +38,10 @@ jobs:
           id: docker_build
           uses: docker/build-push-action@v2
           with:
-            context: "{{defaultContext}}:cli"
+            context: "{{defaultContext}}:cli-pthreads"
             file: ./Dockerfile
             push: true
-            tags: ${{ secrets.DOCKER_HUB_USERNAME }}/php:cli
+            tags: ${{ secrets.DOCKER_HUB_USERNAME }}/php:cli-pthreads
             cache-from: type=local,src=/tmp/.buildx-cache
             cache-to: type=local,dest=/tmp/.buildx-cache
 
