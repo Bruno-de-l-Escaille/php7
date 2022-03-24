@@ -38,8 +38,8 @@ jobs:
           id: docker_build
           uses: docker/build-push-action@v2
           with:
-            context: ./cli
-            file: ./Dockerfile
+            context: ./
+            file: ./cli/Dockerfile
             push: true
             tags: ${{ secrets.DOCKER_HUB_USERNAME }}/php:api
             cache-from: type=local,src=/tmp/.buildx-cache
