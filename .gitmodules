@@ -1,0 +1,3 @@
+[submodule "pthreads-master"]
+	path = cli-pthreads/pthreads-master
+	url = https://github.com/krakjoe/pthreads.git
