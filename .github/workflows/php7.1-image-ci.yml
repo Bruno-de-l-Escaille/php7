@@ -2,10 +2,9 @@ name: PHP7.1 Docker Image CI
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
+    tags:
+      - "PHP7.1"
+      
 jobs:
 
   build:
@@ -27,6 +26,14 @@ jobs:
           id: buildx
           uses: docker/setup-buildx-action@v1
 
+        - name: Cache Docker layers
+          uses: actions/cache@v2
+          with:
+            path: /tmp/.buildx-cache
+            key: ${{ runner.os }}-buildx-${{ github.sha }}
+            restore-keys: |
+              ${{ runner.os }}-buildx-
+              
         - name: Build and push
           id: docker_build
           uses: docker/build-push-action@v2
@@ -35,6 +42,8 @@ jobs:
             file: ./7.1/Dockerfile
             push: true
             tags: ${{ secrets.DOCKER_HUB_USERNAME }}/php:7.1
+            cache-from: type=local,src=/tmp/.buildx-cache
+            cache-to: type=local,dest=/tmp/.buildx-cache
 
         - name: Image digest
           run: echo ${{ steps.docker_build.outputs.digest }}
