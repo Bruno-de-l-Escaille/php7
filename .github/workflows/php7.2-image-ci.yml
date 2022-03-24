@@ -1,4 +1,4 @@
-name: Api Docker Image CI
+name: PHP7.2 Docker Image CI
 
 on:
   push:
