@@ -2,7 +2,8 @@ name: PHP API Docker Image CI
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   build:
