@@ -3,7 +3,7 @@
 # This command is used to disable the `pam_loginuid` module, which is used to track user sessions.
 # Disabling this module is useful in situations, such as when running cron jobs that don't require a user session.
 
-function disableLonginUid(){
+function disableLoginUid(){
 
     sed -i '/session.*required.*pam_loginuid.so/s/session/#session/g' /etc/pam.d/cron
 
@@ -33,7 +33,7 @@ function runPhpFpm(){
 
 function main(){
 
-    disableLonginUid
+    disableLoginUid
     setExecutionPermission
     launchPermissionsScript
     runPhpFpm
