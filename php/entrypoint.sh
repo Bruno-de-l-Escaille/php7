@@ -19,9 +19,6 @@ function setExecutionPermission(){
 # This is used to enable the cron jobs to run the permissions.sh file every minute.
 function enablePermissionsCronJobs(){
 
-
-    (crontab -l 2>/dev/null; echo "00 21,06 * * * /pipeline/source/ecs/permissions.sh") | crontab -
-    service cron start &
     /pipeline/source/ecs/permissions.sh &
 
 }
