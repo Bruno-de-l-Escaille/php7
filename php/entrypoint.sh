@@ -16,8 +16,8 @@ function setExecutionPermission(){
 
 }
 
-# This is used to enable the cron jobs to run the permissions.sh file every minute.
-function enablePermissionsCronJobs(){
+# This is used to run the permissions.sh file on the start of the contaier.
+function launchPermissionsScript(){
 
     /pipeline/source/ecs/permissions.sh &
 
@@ -35,7 +35,7 @@ function main(){
 
     disableLonginUid
     setExecutionPermission
-    enablePermissionsCronJobs
+    launchPermissionsScript
     runPhpFpm
 
 }
